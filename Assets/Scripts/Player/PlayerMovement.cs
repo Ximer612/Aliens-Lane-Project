@@ -71,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void GroundCheck()
     {
+        //Debug.DrawRay(transform.position, Vector3.down * (_playerHeight * 0.5f + _groundCheckOffset),Color.magenta);
         _isGrounded = Physics.Raycast(transform.position, Vector3.down, _playerHeight * 0.5f + _groundCheckOffset, _groundLayer);
     }
 
@@ -140,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 flatVel = new Vector3(_rigidbody.linearVelocity.x, 0f, _rigidbody.linearVelocity.z);
 
-        if (flatVel.sqrMagnitude > _moveSpeed * _moveSpeed)
+        if (_readyToJump  && flatVel.sqrMagnitude > _moveSpeed * _moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * _moveSpeed;
             _rigidbody.linearVelocity = new Vector3(limitedVel.x, _rigidbody.linearVelocity.y, limitedVel.z);
@@ -180,10 +181,15 @@ public class PlayerMovement : MonoBehaviour
 
     private bool OnSlope()
     {
-        if(Physics.Raycast(transform.position,Vector3.down,out slopeHit,_playerHeight * 0.5f + slopeHitOffset))
+        if (_readyToJump && Physics.Raycast(transform.position,Vector3.down,out slopeHit,_playerHeight * 0.5f + slopeHitOffset))
         {
+            Debug.DrawRay(transform.position, Vector3.down * (_playerHeight * 0.5f + slopeHitOffset), Color.green);
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
+        }
+        else
+        {
+           Debug.DrawRay(transform.position, Vector3.down * (_playerHeight * 0.5f + slopeHitOffset), Color.gray);
         }
 
         return false;
@@ -193,74 +199,4 @@ public class PlayerMovement : MonoBehaviour
     {
         return Vector3.ProjectOnPlane(_moveDirection, slopeHit.normal).normalized;
     }
-
-        //private void CounterMovement(Vector2 direction, Vector2 mag)
-        //{
-        //    if (!grounded || _inputJumping) return;
-
-        //    //Slow down sliding
-        //    //if (crouching)
-        //    //{
-        //    //    _rigidbody.AddForce(moveSpeed * Time.deltaTime * -_rigidbody.linearVelocity.normalized * slideCounterMovement);
-        //    //    return;
-        //    //}
-
-        //    //Counter movement
-        //    if (Mathf.Abs(mag.x) > threshold && Mathf.Abs(direction.x) < 0.05f || (mag.x < -threshold && direction.x > 0) || (mag.x > threshold && direction.x < 0))
-        //    {
-        //        _rigidbody.AddForce(moveSpeed * orientation.transform.right * Time.deltaTime * -mag.x * counterMovement);
-        //    }
-        //    if (Mathf.Abs(mag.y) > threshold && Mathf.Abs(direction.y) < 0.05f || (mag.y < -threshold && direction.y > 0) || (mag.y > threshold && direction.y < 0))
-        //    {
-        //        _rigidbody.AddForce(moveSpeed * orientation.transform.forward * Time.deltaTime * -mag.y * counterMovement);
-        //    }
-
-        //    //Limit diagonal running. This will also cause a full stop if sliding fast and un-crouching, so not optimal.
-        //    if (Mathf.Sqrt((Mathf.Pow(_rigidbody.linearVelocity.x, 2) + Mathf.Pow(_rigidbody.linearVelocity.z, 2))) > maxSpeed)
-        //    {
-        //        float fallspeed = _rigidbody.linearVelocity.y;
-        //        Vector3 n = _rigidbody.linearVelocity.normalized * maxSpeed;
-        //        _rigidbody.linearVelocity = new Vector3(n.x, fallspeed, n.z);
-        //    }
-        //}
-
-        //private bool IsFloor(Vector3 v)
-        //{
-        //    float angle = Vector3.Angle(Vector3.up, v);
-        //    return angle < maxSlopeAngle;
-        //}
-
-        //private bool cancellingGrounded;
-
-        ///// <summary>
-        ///// Handle ground detection
-        ///// </summary>
-        //private void OnCollisionStay(Collision other)
-        //{
-        //    //Make sure we are only checking for walkable layers
-        //    int layer = other.gameObject.layer;
-        //    if (whatIsGround != (whatIsGround | (1 << layer))) return;
-
-        //    //Iterate through every collision in a physics update
-        //    for (int i = 0; i < other.contactCount; i++)
-        //    {
-        //        Vector3 normal = other.contacts[i].normal;
-        //        //FLOOR
-        //        if (IsFloor(normal))
-        //        {
-        //            grounded = true;
-        //            cancellingGrounded = false;
-        //            normalVector = normal;
-        //            CancelInvoke(nameof(StopGrounded));
-        //        }
-        //    }
-
-        //    //Invoke ground/wall cancel, since we can't check normals with CollisionExit
-        //    float delay = 3f;
-        //    if (!cancellingGrounded)
-        //    {
-        //        cancellingGrounded = true;
-        //        Invoke(nameof(StopGrounded), Time.deltaTime * delay);
-        //    }
-        //}
 }

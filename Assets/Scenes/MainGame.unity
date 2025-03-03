@@ -1298,14 +1298,14 @@ MonoBehaviour:
   _readyToJump: 1
   _groundDrag: 5
   _groundCheckOffset: 0.2
-  _playerHeight: 2
+  _playerHeight: 2.5
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
   _isGrounded: 0
   _isOnSlope: 0
-  maxSlopeAngle: 0
-  slopeHitOffset: 0
+  maxSlopeAngle: 45
+  slopeHitOffset: 0.5
   _inputMovementDirection: {x: 0, y: 0}
   _moveDirection: {x: 0, y: 0, z: 0}
   _inputJumping: 0
