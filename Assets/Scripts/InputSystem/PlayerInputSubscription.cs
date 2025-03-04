@@ -1,18 +1,23 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInputSubscription : MonoBehaviour
 {
+    InputMap _Input = null;
+
     public Vector2 MovementInput { get; private set; } = Vector2.zero;
     public Vector2 CameraInput { get; private set; } = Vector2.zero;
     public bool MenuInput { get; private set; } = false;
     public bool JumpInput { get; private set; } = false;
     public bool FireInput { get; private set; } = false;
+    public bool InteractInput { get; private set; } = false;
     public bool SprintInput { get; private set; } = false;
+    //public bool InteractInput { get; private set; } = false;
     public float SwitchWeaponInput { get; private set; } = 0f;
 
-    InputMap _Input = null;
-
+    public Action OnInteractInput;
+    public Action OnFireInput;
 
     private void OnEnable() //subscribe to inputs
     {
@@ -30,10 +35,16 @@ public class PlayerInputSubscription : MonoBehaviour
         _Input.PlayerInputMap.JumpInput.canceled += SetJump;
 
         _Input.PlayerInputMap.FireInput.performed += SetFire;
+        _Input.PlayerInputMap.FireInput.performed += CallFire;
         _Input.PlayerInputMap.FireInput.canceled += SetFire;
 
         _Input.PlayerInputMap.SprintInput.performed += SetSprint;
         _Input.PlayerInputMap.SprintInput.canceled += SetSprint;
+
+        _Input.PlayerInputMap.InteractInput.performed += SetInteract;
+        _Input.PlayerInputMap.InteractInput.performed += CallInteract;
+        _Input.PlayerInputMap.InteractInput.canceled += SetInteract;
+
 
         _Input.PlayerInputMap.SwitchWeaponInput.performed += SetSwitchWeaponInput;
         _Input.PlayerInputMap.SwitchWeaponInput.canceled += SetSwitchWeaponInput;
@@ -54,10 +65,15 @@ public class PlayerInputSubscription : MonoBehaviour
         _Input.PlayerInputMap.JumpInput.canceled -= SetJump;
 
         _Input.PlayerInputMap.FireInput.performed -= SetFire;
+        _Input.PlayerInputMap.FireInput.performed -= CallFire;
         _Input.PlayerInputMap.FireInput.canceled -= SetFire;
 
         _Input.PlayerInputMap.SprintInput.performed += SetSprint;
         _Input.PlayerInputMap.SprintInput.canceled += SetSprint;
+
+        _Input.PlayerInputMap.InteractInput.performed -= SetInteract;
+        _Input.PlayerInputMap.InteractInput.performed -= CallInteract;
+        _Input.PlayerInputMap.InteractInput.canceled -= SetInteract;
 
         _Input.PlayerInputMap.SwitchWeaponInput.performed -= SetSwitchWeaponInput;
         _Input.PlayerInputMap.SwitchWeaponInput.canceled -= SetSwitchWeaponInput;
@@ -90,13 +106,28 @@ public class PlayerInputSubscription : MonoBehaviour
         FireInput = ctx.performed;
     }
 
+    private void SetInteract(InputAction.CallbackContext ctx)
+    {
+        FireInput = ctx.performed;
+    }
+
+    private void CallFire(InputAction.CallbackContext ctx)
+    {
+        OnFireInput?.Invoke();
+    }
+
     private void SetCamera(InputAction.CallbackContext ctx)
     {
         CameraInput = ctx.ReadValue<Vector2>();
     }
 
+    private void CallInteract(InputAction.CallbackContext ctx)
+    {
+        OnInteractInput?.Invoke();
+    }
+
     private void SetSwitchWeaponInput(InputAction.CallbackContext ctx)
     {
-        SwitchWeaponInput = ctx.ReadValue<float>();
+        SwitchWeaponInput = ctx.ReadValue<Vector2>().y;
     }
 }

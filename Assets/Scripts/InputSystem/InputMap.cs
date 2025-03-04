@@ -119,6 +119,15 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""InteractInput"",
+                    ""type"": ""Button"",
+                    ""id"": ""fd2fca6e-623f-4104-afab-b238cc702d83"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""JumpInput"",
                     ""type"": ""Value"",
                     ""id"": ""c767ab03-6ad9-4689-bbe7-2afdafd78849"",
@@ -323,6 +332,28 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""3bdb5373-ffd7-4c56-9f0d-8743ddd1e3c5"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eb5523db-b040-4a3e-bc8e-8c4e2a3aea8c"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""432432a6-b62a-4926-a0c0-ad2943850b21"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -441,6 +472,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         m_PlayerInputMap_MovementInput = m_PlayerInputMap.FindAction("MovementInput", throwIfNotFound: true);
         m_PlayerInputMap_SprintInput = m_PlayerInputMap.FindAction("SprintInput", throwIfNotFound: true);
         m_PlayerInputMap_MenuInput = m_PlayerInputMap.FindAction("MenuInput", throwIfNotFound: true);
+        m_PlayerInputMap_InteractInput = m_PlayerInputMap.FindAction("InteractInput", throwIfNotFound: true);
         m_PlayerInputMap_JumpInput = m_PlayerInputMap.FindAction("JumpInput", throwIfNotFound: true);
         m_PlayerInputMap_FireInput = m_PlayerInputMap.FindAction("FireInput", throwIfNotFound: true);
         m_PlayerInputMap_CameraInput = m_PlayerInputMap.FindAction("CameraInput", throwIfNotFound: true);
@@ -528,6 +560,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerInputMap_MovementInput;
     private readonly InputAction m_PlayerInputMap_SprintInput;
     private readonly InputAction m_PlayerInputMap_MenuInput;
+    private readonly InputAction m_PlayerInputMap_InteractInput;
     private readonly InputAction m_PlayerInputMap_JumpInput;
     private readonly InputAction m_PlayerInputMap_FireInput;
     private readonly InputAction m_PlayerInputMap_CameraInput;
@@ -555,6 +588,10 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerInputMap/MenuInput".
         /// </summary>
         public InputAction @MenuInput => m_Wrapper.m_PlayerInputMap_MenuInput;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerInputMap/InteractInput".
+        /// </summary>
+        public InputAction @InteractInput => m_Wrapper.m_PlayerInputMap_InteractInput;
         /// <summary>
         /// Provides access to the underlying input action "PlayerInputMap/JumpInput".
         /// </summary>
@@ -606,6 +643,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @MenuInput.started += instance.OnMenuInput;
             @MenuInput.performed += instance.OnMenuInput;
             @MenuInput.canceled += instance.OnMenuInput;
+            @InteractInput.started += instance.OnInteractInput;
+            @InteractInput.performed += instance.OnInteractInput;
+            @InteractInput.canceled += instance.OnInteractInput;
             @JumpInput.started += instance.OnJumpInput;
             @JumpInput.performed += instance.OnJumpInput;
             @JumpInput.canceled += instance.OnJumpInput;
@@ -638,6 +678,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @MenuInput.started -= instance.OnMenuInput;
             @MenuInput.performed -= instance.OnMenuInput;
             @MenuInput.canceled -= instance.OnMenuInput;
+            @InteractInput.started -= instance.OnInteractInput;
+            @InteractInput.performed -= instance.OnInteractInput;
+            @InteractInput.canceled -= instance.OnInteractInput;
             @JumpInput.started -= instance.OnJumpInput;
             @JumpInput.performed -= instance.OnJumpInput;
             @JumpInput.canceled -= instance.OnJumpInput;
@@ -711,6 +754,13 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMenuInput(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "InteractInput" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInteractInput(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "JumpInput" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

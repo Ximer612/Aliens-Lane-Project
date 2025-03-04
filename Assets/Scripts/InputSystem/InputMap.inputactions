@@ -33,6 +33,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "InteractInput",
+                    "type": "Button",
+                    "id": "fd2fca6e-623f-4104-afab-b238cc702d83",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "JumpInput",
                     "type": "Value",
                     "id": "c767ab03-6ad9-4689-bbe7-2afdafd78849",
@@ -232,6 +241,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "MenuInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3bdb5373-ffd7-4c56-9f0d-8743ddd1e3c5",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eb5523db-b040-4a3e-bc8e-8c4e2a3aea8c",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractInput",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
