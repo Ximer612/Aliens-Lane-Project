@@ -14,8 +14,8 @@ TagManager:
   - Ground
   - HiddenInGame
   - Interactable
-  - PlayerProjectile
-  - EnemyProjectile
+  - PlayerBullet
+  - EnemyBullet
   - Enemy
   - 
   - 

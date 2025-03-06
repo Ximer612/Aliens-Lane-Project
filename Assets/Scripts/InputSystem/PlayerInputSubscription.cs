@@ -13,11 +13,11 @@ public class PlayerInputSubscription : MonoBehaviour
     public bool FireInput { get; private set; } = false;
     public bool InteractInput { get; private set; } = false;
     public bool SprintInput { get; private set; } = false;
-    //public bool InteractInput { get; private set; } = false;
     public float SwitchWeaponInput { get; private set; } = 0f;
 
     public Action OnInteractInput;
     public Action OnFireInput;
+    public Action<float> OnSwitchWeaponInput;
 
     private void OnEnable() //subscribe to inputs
     {
@@ -129,5 +129,6 @@ public class PlayerInputSubscription : MonoBehaviour
     private void SetSwitchWeaponInput(InputAction.CallbackContext ctx)
     {
         SwitchWeaponInput = ctx.ReadValue<Vector2>().y;
+        OnSwitchWeaponInput?.DynamicInvoke(SwitchWeaponInput);
     }
 }

@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Vector2 _inputMovementDirection;
     [SerializeField] private Vector3 _moveDirection;
     [SerializeField] private bool _inputJumping;
+
     [SerializeField] private MovementState _movementState;
 
     private enum MovementState

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39318edc9cc531c40a9c5079001b7d23, type: 3}
+  m_Name: Weapon_Pistol
+  m_EditorClassIdentifier: 
+  BulletPrefab: {fileID: 1930264504384607537, guid: 6851ac77968780147b9bb58cf9022347, type: 3}
+  HoldingWeaponSprite: {fileID: 54343662, guid: 3239ebb7139cbc046aa3831d289f3428, type: 3}
+  Name: Pistol
+  MaxAmmo: 18
+  EndlessAmmo: 1
+  Damage: 5
+  RandomSpread: 0
+  ReloadTime: 2
