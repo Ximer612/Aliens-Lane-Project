@@ -23,7 +23,6 @@ public class RaycastBullet : Bullet
             OnHit();
         }
 
-        print("RAYCASTED BUULT");
         ResetBullet();
     }
 

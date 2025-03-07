@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _jumpCooldown;
     [SerializeField] private float _extraGravity;
+    [SerializeField] private float _fallingGravityMultiplier;
     [SerializeField] private float _airMultiplier;
     [SerializeField] private bool _readyToJump = true;
 
@@ -129,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (_rigidbody.linearVelocity.y < 0)
             {
-                tempExtraGravity *= 35;
+                tempExtraGravity *= _fallingGravityMultiplier;
             }
 
             _rigidbody.AddForce(Vector3.down * Time.deltaTime * tempExtraGravity);
@@ -184,13 +185,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_readyToJump && Physics.Raycast(transform.position,Vector3.down,out slopeHit,_playerHeight * 0.5f + slopeHitOffset))
         {
-            Debug.DrawRay(transform.position, Vector3.down * (_playerHeight * 0.5f + slopeHitOffset), Color.green);
+            //Debug.DrawRay(transform.position, Vector3.down * (_playerHeight * 0.5f + slopeHitOffset), Color.green);
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
         }
         else
         {
-           Debug.DrawRay(transform.position, Vector3.down * (_playerHeight * 0.5f + slopeHitOffset), Color.gray);
+           //Debug.DrawRay(transform.position, Vector3.down * (_playerHeight * 0.5f + slopeHitOffset), Color.gray);
         }
 
         return false;

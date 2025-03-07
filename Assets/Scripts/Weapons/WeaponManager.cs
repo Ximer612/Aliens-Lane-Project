@@ -2,10 +2,17 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
+    [SerializeField] PlayerWeapon _playerWeapon;
+    [SerializeField] GameObject _weaponMaster;
 
-    void GiveWeaponToActor(WeaponScriptableObject InWeapon)
+    public void GiveWeaponToPlayer(WeaponScriptableObject InWeapon)
     {
-        //Instantiate(Weapon, transform, Quaternion.identity);
+        GameObject newWeapon = Instantiate(_weaponMaster, Vector3.one, Quaternion.identity);
+        newWeapon.name = InWeapon.Name;
+        Weapon weaponScript = newWeapon.GetComponent<Weapon>();
+        weaponScript.SetScriptableObject(InWeapon);
+
+        _playerWeapon.AddWeapon(newWeapon, newWeapon.GetComponent<Weapon>());
     }
 
 }

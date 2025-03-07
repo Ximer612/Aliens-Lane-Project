@@ -5,17 +5,24 @@ using UnityEngine.Events;
 
 public class Weapon : MonoBehaviour
 {
+    public event Action<int> OnReloaded;
     public UnityEvent OnShootBullet, OnBulletHit;
-    public Action<int> OnReload;
     [SerializeField] private WeaponScriptableObject _weaponScriptableObject;
     public WeaponScriptableObject ScriptableObject { get => _weaponScriptableObject; }
     [SerializeField] private Queue<Tuple<GameObject,Bullet>> _bulletsPool;
-    //[SerializeField] private Transform _muzzle;
     public int AmmoLeft = 0;
     public int AmmoRecharges = 0;
     public bool Unlocked = false;
     [SerializeField] private bool _endlessAmmo = false;
     [SerializeField] private bool _reloading = false;
+
+    public void SetScriptableObject(WeaponScriptableObject scriptableObject)
+    {
+        _weaponScriptableObject = scriptableObject;
+        AmmoLeft = _weaponScriptableObject.MaxAmmo;
+        _endlessAmmo = _weaponScriptableObject.EndlessAmmo;
+    }
+
 
     private void Start()
     {
@@ -42,22 +49,11 @@ public class Weapon : MonoBehaviour
 
     public void Shoot()
     {
-        if (_bulletsPool.Count < 1)
+        if (_bulletsPool.Count < 1 || _reloading)
             return;
-
-        if (AmmoLeft < 1)
-        {
-            if(!_reloading && (_endlessAmmo || AmmoRecharges > 0 ))
-            {
-                _reloading = true;
-                Invoke(nameof(Reload),_weaponScriptableObject.ReloadTime);
-            }
-
-            return;
-        }
 
         AmmoLeft--;
-        OnReload?.Invoke(AmmoLeft);
+        OnReloaded?.Invoke(AmmoLeft);
 
         Tuple<GameObject, Bullet> bullet = _bulletsPool.Dequeue();
 
@@ -65,12 +61,23 @@ public class Weapon : MonoBehaviour
         {
             bullet.Item2.ShootBullet(Camera.main.transform);
         }
+
+        if (AmmoLeft < 1)
+        {
+            if (!_reloading && (_endlessAmmo || AmmoRecharges > 0))
+            {
+                _reloading = true;
+                Invoke(nameof(Reload), _weaponScriptableObject.ReloadTime);
+            }
+
+            return;
+        }
     }
 
     public void Reload()
     {
         AmmoLeft = _weaponScriptableObject.MaxAmmo;
         _reloading = false;
-        OnReload?.Invoke(AmmoLeft);
+        OnReloaded?.Invoke(AmmoLeft);
     }
 }
