@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletPrefab: {fileID: 1930264504384607537, guid: 6851ac77968780147b9bb58cf9022347, type: 3}
   HoldingWeaponSprite: {fileID: -1026046858, guid: 3239ebb7139cbc046aa3831d289f3428, type: 3}
+  ShootSound: {fileID: 0}
   Name: Shotgun
   MaxAmmo: 5
-  EndlessAmmo: 1
   Damage: 20
-  RandomSpread: 0
+  EndlessAmmo: 1
+  SingleSpread: 0
+  RandomSpreadFactor: 0
   ReloadTime: 2
+  FireRate: 1

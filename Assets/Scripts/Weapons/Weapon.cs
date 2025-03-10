@@ -23,24 +23,20 @@ public class Weapon : MonoBehaviour
         _endlessAmmo = _weaponScriptableObject.EndlessAmmo;
     }
 
-
-    private void Start()
+    public void InstantiateBullets(LayerMask inBulletsLayerMask)
     {
-        AmmoLeft = _weaponScriptableObject.MaxAmmo;
-        _endlessAmmo = _weaponScriptableObject.EndlessAmmo;
-
-        _bulletsPool = new Queue< Tuple < GameObject,Bullet >> (_weaponScriptableObject.MaxAmmo);
+        _bulletsPool = new Queue<Tuple<GameObject, Bullet>>(_weaponScriptableObject.MaxAmmo);
 
         for (int i = 0; i < _weaponScriptableObject.MaxAmmo; i++)
         {
-            GameObject bullet = Instantiate(_weaponScriptableObject.BulletPrefab,transform);
+            GameObject bullet = Instantiate(_weaponScriptableObject.BulletPrefab, transform);
+            
             //If it's a player then give it's a PlayerBullet else a EnemyBullet
-
             bullet.layer = gameObject.layer == 3 ? 9 : 10;
 
             Bullet bulletScript = bullet.GetComponent<Bullet>();
-            bulletScript.SetBullet(_weaponScriptableObject.Damage, _weaponScriptableObject.RandomSpread, Physics2D.GetLayerCollisionMask(bullet.layer));
-            Tuple<GameObject,Bullet> bulletTuple = new Tuple<GameObject,Bullet>(bullet,bulletScript);
+            bulletScript.SetBullet(_weaponScriptableObject.Damage, _weaponScriptableObject.RandomSpreadFactor, inBulletsLayerMask);
+            Tuple<GameObject, Bullet> bulletTuple = new Tuple<GameObject, Bullet>(bullet, bulletScript);
 
             bulletScript.OnResetDelegate += () => { _bulletsPool.Enqueue(bulletTuple); };
             _bulletsPool.Enqueue(bulletTuple);

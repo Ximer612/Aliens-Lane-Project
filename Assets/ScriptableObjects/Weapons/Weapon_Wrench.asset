@@ -10,13 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39318edc9cc531c40a9c5079001b7d23, type: 3}
-  m_Name: Weapon_Fists
+  m_Name: Weapon_Wrench
   m_EditorClassIdentifier: 
-  BulletPrefab: {fileID: 1930264504384607537, guid: e675cc4b959c4c344a53e8bab0e32d80, type: 3}
-  HoldingWeaponSprite: {fileID: 314542697, guid: 3239ebb7139cbc046aa3831d289f3428, type: 3}
-  Name: Fists
+  BulletPrefab: {fileID: 1930264504384607537, guid: 375ffcc1df4b7724c871d75a91efb5cb, type: 3}
+  HoldingWeaponSprite: {fileID: 94785737, guid: 3239ebb7139cbc046aa3831d289f3428, type: 3}
+  ShootSound: {fileID: 0}
+  Name: Wrench / Fix fence ray
   MaxAmmo: 1
+  Damage: 25
   EndlessAmmo: 1
-  Damage: 1
-  RandomSpread: 0
+  SingleSpread: 0
+  RandomSpreadFactor: 0
   ReloadTime: 0
+  FireRate: 0.8

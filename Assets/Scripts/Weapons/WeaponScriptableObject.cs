@@ -8,9 +8,9 @@ public class WeaponScriptableObject : ScriptableObject
     public AudioClip ShootSound;
     public string Name;
     public int MaxAmmo;
-    public bool EndlessAmmo;
     public int Damage;
-    public float RandomSpread;
+    public bool EndlessAmmo, SingleSpread;
+    public float RandomSpreadFactor;
     public float ReloadTime;
     public float FireRate;
 

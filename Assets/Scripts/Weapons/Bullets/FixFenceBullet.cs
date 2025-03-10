@@ -1,13 +1,12 @@
 using UnityEditor;
 using UnityEngine;
 
-public class AreaBullet : Bullet
+public class FixFenceBullet : AreaBullet
 {
-    [SerializeField] protected Vector3 _areaHalfExtension;
-
     public override void ShootBullet(Transform muzzle)
     {
-        base.ShootBullet(muzzle);
+        gameObject.SetActive(true);
+
         transform.rotation = muzzle.rotation;
 
         Collider[] hittedGameObjects = Physics.OverlapBox(transform.position, _areaHalfExtension, transform.rotation, _layerMask);
@@ -21,7 +20,7 @@ public class AreaBullet : Bullet
                 continue;
             }
 
-            hittedActor.Damage(_damage, gameObject);
+            hittedActor.Damage(hittedActor.gameObject.layer == 11 ? 1 : _damage, gameObject);
             OnHit();
         }
 

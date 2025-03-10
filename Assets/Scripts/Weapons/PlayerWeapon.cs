@@ -12,7 +12,11 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private int _currentWeaponIndex;
     [SerializeField] private InputManager _inputManager;
     [SerializeField] private Transform _weaponsHolder;
-    bool canSwitch = true;
+    bool canSwitch, canShoot;
+
+    [SerializeField] private float _shootTimer, _shootCounter;
+    [SerializeField] private float _switchTimer, _switchCounter;
+
 
     void Start()
     {
@@ -22,22 +26,40 @@ public class PlayerWeapon : MonoBehaviour
         for (int i = 0; i < _weapons.Count; i++)
         {
             _weapons[i].Unlocked = true;
+            _weapons[i].SetScriptableObject(_weapons[i].ScriptableObject);
+            _weapons[i].InstantiateBullets(WeaponManager.PlayerBulletsLayerMask);
         }
 
         OnSwitchWeapon?.Invoke();
         OnUpdateAmmo?.Invoke(CurrentWeapon.AmmoLeft);
+        CanSwitch();
+        enabled = false;
+    }
+
+    private void Update()
+    {
+        _shootCounter -= Time.deltaTime;
+
+        if (_inputManager.GetInput.FireInput && canShoot && !CurrentWeapon.ScriptableObject.SingleSpread && _shootCounter < 0)
+        {
+            CurrentWeapon.Shoot();
+            _shootCounter = CurrentWeapon.ScriptableObject.FireRate;
+        }
     }
 
     void TryShoot()
     {
-        CurrentWeapon.Shoot();
+        if(CurrentWeapon.ScriptableObject.SingleSpread)
+            CurrentWeapon.Shoot();
     }
 
     void SwitchWeapon(float weaponOffset)
     {
         if (!canSwitch) return;
 
+        enabled = false;
         canSwitch = false;
+        canShoot = false;
         int sign = weaponOffset > 0 ? 1 : -1;
 
         CurrentWeapon.OnReloaded -= OnUpdateAmmo;
@@ -70,7 +92,10 @@ public class PlayerWeapon : MonoBehaviour
 
     void CanSwitch()
     {
+        _shootCounter = 0;
         canSwitch = true;
+        canShoot = true;
+        enabled = true;
     }
 
     public void AddWeapon(GameObject inNewWeapon, Weapon inNewWeaponScript)
