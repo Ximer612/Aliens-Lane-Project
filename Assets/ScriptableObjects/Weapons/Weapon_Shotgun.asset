@@ -19,7 +19,7 @@ MonoBehaviour:
   MaxAmmo: 5
   Damage: 20
   EndlessAmmo: 1
-  SingleSpread: 0
+  SingleSpread: 1
   RandomSpreadFactor: 0
   ReloadTime: 2
   FireRate: 1

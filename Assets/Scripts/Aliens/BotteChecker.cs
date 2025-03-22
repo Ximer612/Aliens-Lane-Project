@@ -20,7 +20,7 @@ public class BotteChecker : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_currentObjective == null && other.CompareTag("Fence"))
+        if (_currentObjective == null && (other.CompareTag("Fence") || other.CompareTag("Player")) )
         {
             _alienMovement.enabled = false;
             _currentObjective = other.transform.gameObject;

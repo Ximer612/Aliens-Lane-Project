@@ -25,15 +25,15 @@ public class WeaponManager : MonoBehaviour
         _playerWeapon.AddWeapon(newWeapon, newWeapon.GetComponent<Weapon>());
     }
 
-    public void GiveWeaponToActor(Actor InActor, WeaponScriptableObject InWeapon)
-    {
-        GameObject newWeapon = Instantiate(_weaponMaster, Vector3.one, Quaternion.identity);
-        newWeapon.name = InWeapon.Name;
-        Weapon weaponScript = newWeapon.GetComponent<Weapon>();
-        weaponScript.SetScriptableObject(InWeapon);
-        weaponScript.InstantiateBullets(_playerBulletsLayerMask);
+    //public void GiveWeaponToActor(Actor InActor, WeaponScriptableObject InWeapon)
+    //{
+    //    GameObject newWeapon = Instantiate(_weaponMaster, Vector3.one, Quaternion.identity);
+    //    newWeapon.name = InWeapon.Name;
+    //    Weapon weaponScript = newWeapon.GetComponent<Weapon>();
+    //    weaponScript.SetScriptableObject(InWeapon);
+    //    weaponScript.InstantiateBullets(_playerBulletsLayerMask);
 
-        _playerWeapon.AddWeapon(newWeapon, newWeapon.GetComponent<Weapon>());
-    }
+    //    _playerWeapon.AddWeapon(newWeapon, newWeapon.GetComponent<Weapon>());
+    //}
 
 }

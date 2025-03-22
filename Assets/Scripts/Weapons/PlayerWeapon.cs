@@ -38,6 +38,8 @@ public class PlayerWeapon : MonoBehaviour
     {
         if(CurrentWeapon.ScriptableObject.SingleSpread)
             CurrentWeapon.Shoot(Camera.main.transform);
+
+        //add continue shooting wep (?)
     }
 
     void SwitchWeapon(float weaponOffset)
