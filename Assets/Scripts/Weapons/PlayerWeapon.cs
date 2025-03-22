@@ -14,9 +14,7 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private Transform _weaponsHolder;
     bool canSwitch, canShoot;
 
-    [SerializeField] private float _shootTimer, _shootCounter;
     [SerializeField] private float _switchTimer, _switchCounter;
-
 
     void Start()
     {
@@ -34,17 +32,6 @@ public class PlayerWeapon : MonoBehaviour
         OnUpdateAmmo?.Invoke(CurrentWeapon.AmmoLeft);
         CanSwitch();
         enabled = false;
-    }
-
-    private void Update()
-    {
-        _shootCounter -= Time.deltaTime;
-
-        if (_inputManager.GetInput.FireInput && canShoot && !CurrentWeapon.ScriptableObject.SingleSpread && _shootCounter < 0)
-        {
-            CurrentWeapon.Shoot();
-            _shootCounter = CurrentWeapon.ScriptableObject.FireRate;
-        }
     }
 
     void TryShoot()
@@ -92,7 +79,6 @@ public class PlayerWeapon : MonoBehaviour
 
     void CanSwitch()
     {
-        _shootCounter = 0;
         canSwitch = true;
         canShoot = true;
         enabled = true;

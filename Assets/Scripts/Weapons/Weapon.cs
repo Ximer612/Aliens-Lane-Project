@@ -15,12 +15,14 @@ public class Weapon : MonoBehaviour
     public bool Unlocked = false;
     [SerializeField] private bool _endlessAmmo = false;
     [SerializeField] private bool _reloading = false;
+    [SerializeField] private float _shootTimer, _shootCounter;
 
     public void SetScriptableObject(WeaponScriptableObject scriptableObject)
     {
         _weaponScriptableObject = scriptableObject;
         AmmoLeft = _weaponScriptableObject.MaxAmmo;
         _endlessAmmo = _weaponScriptableObject.EndlessAmmo;
+        _shootTimer = scriptableObject.FireRate;
     }
 
     public void InstantiateBullets(LayerMask inBulletsLayerMask)
@@ -45,7 +47,7 @@ public class Weapon : MonoBehaviour
 
     public void Shoot()
     {
-        if (_bulletsPool.Count < 1 || _reloading)
+        if (_bulletsPool.Count < 1 || _reloading || _shootCounter > 0)
             return;
 
         AmmoLeft--;
@@ -75,5 +77,10 @@ public class Weapon : MonoBehaviour
         AmmoLeft = _weaponScriptableObject.MaxAmmo;
         _reloading = false;
         OnReloaded?.Invoke(AmmoLeft);
+    }
+
+    private void Update()
+    {
+        _shootCounter -= Time.deltaTime;
     }
 }

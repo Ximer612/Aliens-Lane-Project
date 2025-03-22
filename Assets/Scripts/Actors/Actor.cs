@@ -8,18 +8,23 @@ public class Actor : MonoBehaviour
     public float HP { get => _hp; set => _hp = Mathf.Min(value, MaxHP); }
     public bool Alive = true;
     public UnityEvent OnDie, OnHeal, OnRespawn;
+    //public PlayerWeapon CurrentWeapon;
 
     public virtual void Heal(float value)
     {
         if(HP < 1)
         {
             HP = value;
-            OnRespawn.Invoke();
+            Respawn();
             return;
         }
 
         HP += value;
         OnHeal.Invoke();
+    }
+    public virtual void Respawn()
+    {
+       OnRespawn.Invoke();
     }
 
     public virtual void Damage(float damage, GameObject vandal)
@@ -28,8 +33,12 @@ public class Actor : MonoBehaviour
         if (HP < 1)
         {
             Alive = false;
-            OnDie.Invoke();
+            Die();
         }
     }
 
+    protected virtual void Die()
+    {
+        OnDie.Invoke();
+    }
 }

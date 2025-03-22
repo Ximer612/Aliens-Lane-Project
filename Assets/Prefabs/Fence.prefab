@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 5575217109043574732}
   - component: {fileID: 523842869533420217}
   - component: {fileID: 8100215403834721308}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Fence
-  m_TagString: Untagged
+  m_TagString: Fence
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,3 +138,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30d3059faf8019746a2f6d0a95e6d625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxHP: 200
+  _hp: 100
+  Alive: 1
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHeal:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRespawn:
+    m_PersistentCalls:
+      m_Calls: []

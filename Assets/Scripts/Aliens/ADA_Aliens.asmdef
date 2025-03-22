@@ -1,0 +1,19 @@
+{
+    "name": "Aliens",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f5e914cc19cc3da4498042dda47770a2",
+        "GUID:b72446eec67c0864392a31013eddf8c5",
+        "GUID:8c4dd21966739024fbd72155091d199e",
+        "GUID:aaa12958127834242a9c8ea7825f31e2"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
