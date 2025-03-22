@@ -21,5 +21,5 @@ MonoBehaviour:
   EndlessAmmo: 1
   SingleSpread: 0
   RandomSpreadFactor: 0
-  ReloadTime: 0
-  FireRate: 0.2
+  ReloadTime: 1
+  FireRate: 5

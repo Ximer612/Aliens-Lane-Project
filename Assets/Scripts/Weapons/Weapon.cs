@@ -45,7 +45,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public void Shoot()
+    public void Shoot(Transform muzzle)
     {
         if (_bulletsPool.Count < 1 || _reloading || _shootCounter > 0)
             return;
@@ -57,7 +57,7 @@ public class Weapon : MonoBehaviour
 
         if(bullet.Item1 && bullet.Item2)
         {
-            bullet.Item2.ShootBullet(Camera.main.transform);
+            bullet.Item2.ShootBullet(muzzle);
         }
 
         if (AmmoLeft < 1)

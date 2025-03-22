@@ -37,7 +37,7 @@ public class PlayerWeapon : MonoBehaviour
     void TryShoot()
     {
         if(CurrentWeapon.ScriptableObject.SingleSpread)
-            CurrentWeapon.Shoot();
+            CurrentWeapon.Shoot(Camera.main.transform);
     }
 
     void SwitchWeapon(float weaponOffset)
