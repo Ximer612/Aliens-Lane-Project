@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8845349525984804643}
   - component: {fileID: 3908218317983569211}
   - component: {fileID: 8780954915797391495}
-  - component: {fileID: 2342104149100230262}
   m_Layer: 0
   m_Name: Fog
   m_TagString: Untagged
@@ -50,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6120754437729042524}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -66,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c0bc8db2bf2931f429e17a02c2aef5e9, type: 2}
+  - {fileID: 2100000, guid: abc775210bc40b44795a7de5314b2a52, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -109,39 +108,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2342104149100230262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6120754437729042524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1fbb15bf92b84f40a1eb030765b5afe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parameters:
-    albedo: {r: 1, g: 1, b: 1, a: 1}
-    meanFreePath: 2
-    blendingMode: 1
-    priority: 0
-    anisotropy: 0
-    volumeMask: {fileID: 0}
-    textureScrollingSpeed: {x: 0, y: 0, z: 0}
-    textureTiling: {x: 1, y: 1, z: 1}
-    positiveFade: {x: 0.01, y: 0.02, z: 0.000625}
-    negativeFade: {x: 0.01, y: 0.02, z: 0.000625}
-    m_EditorUniformFade: 0.1
-    m_EditorPositiveFade: {x: 0.01, y: 0.02, z: 0.000625}
-    m_EditorNegativeFade: {x: 0.01, y: 0.02, z: 0.000625}
-    m_EditorAdvancedFade: 0
-    size: {x: 10, y: 5, z: 160}
-    invertFade: 0
-    distanceFadeStart: 10000
-    distanceFadeEnd: 10000
-    textureOffset: {x: 0, y: 0, z: 0}
-    falloffMode: 0
-    maskMode: 0
-    materialMask: {fileID: 0}
-  m_Version: 3

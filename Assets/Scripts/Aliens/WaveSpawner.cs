@@ -13,12 +13,13 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] int _mancheIndex = -1;
     [SerializeField] int _mancheInstanciateIndex = -1;
     float _spawnRange = 100;
-    float _yOffsetFromGround = 20;
+    float _yOffsetFromGround = 10;
 
     [SerializeField] float _counter, _timeToSpawnOneEnemy;
     [SerializeField] SpawnerState _spawnState;
     Vector3 _oldPosition,_nextPosition;
     [SerializeField] AnimationCurve _movingCurve;
+    [SerializeField] float _lerpMultiplier;
 
     private List<Vector2> _possibilePositions;
     private Vector2 _selectedPosition = new Vector2(0,0);
@@ -29,6 +30,10 @@ public class WaveSpawner : MonoBehaviour
         _possibilePositions.Add(new Vector2(1, 0));
         _possibilePositions.Add(new Vector2(0, 1));
         _possibilePositions.Add(new Vector2(1, 1));
+        _possibilePositions.Add(new Vector2(0.5f, 0));
+        _possibilePositions.Add(new Vector2(0.5f, 1));
+        _possibilePositions.Add(new Vector2(0, 0.5f));
+        _possibilePositions.Add(new Vector2(1, 0.5f));
 
         enabled = false;
         StartNewWave();
@@ -36,6 +41,14 @@ public class WaveSpawner : MonoBehaviour
     private void StartNewWave()
     {
         _waveIndex++;
+
+        if (_waveIndex >= _waves.Length)
+        {
+            enabled = false;
+            return;
+        }
+
+        _mancheIndex = -1;
         enabled = true;
         StartNewManche();
     }
@@ -46,13 +59,18 @@ public class WaveSpawner : MonoBehaviour
 
         if(_mancheIndex >= _waves[_waveIndex].SpawnManche.Length)
         {
-            enabled = false;
+            StartNewWave();
             return;
         }
 
         _mancheInstanciateIndex = -1;
-        _counter = _waves[_waveIndex].SpawnManche[_mancheIndex].TimeFromLastManche;
-        _counter = 0.5f;
+        SwitchState(SpawnerState.Idle, _waves[_waveIndex].SpawnManche[_mancheIndex].TimeFromLastManche);
+    }
+
+    private void SwitchState(SpawnerState NewState, float newCounter = 0)
+    {
+        _spawnState = NewState;
+        _counter = newCounter;
     }
 
     private void Update()
@@ -70,10 +88,10 @@ public class WaveSpawner : MonoBehaviour
                     _possibilePositions.RemoveAt(positionIndex);
                     _possibilePositions.Add(_selectedPosition);
                     _selectedPosition = randomPosition;
-                    Vector3 newUfoPosition = new Vector3(_selectedPosition.x * _spawnRange, _yOffsetFromGround, _selectedPosition.y * _spawnRange);
+                    Vector3 newUfoPosition = new Vector3(_selectedPosition.x * _spawnRange, UnityEngine.Random.Range(-_yOffsetFromGround, _yOffsetFromGround), _selectedPosition.y * _spawnRange);
                     _nextPosition = newUfoPosition;
                     _oldPosition = transform.localPosition;
-                    _spawnState = SpawnerState.Moving;
+                    SwitchState(SpawnerState.Moving);
                 }
                 break;
 
@@ -85,15 +103,18 @@ public class WaveSpawner : MonoBehaviour
                     _mancheInstanciateIndex++;
                     if(_mancheInstanciateIndex >= _waves[_waveIndex].SpawnManche[_mancheIndex].Aliens.Length)
                     {
-                        _spawnState = SpawnerState.Idle; //then check if ended to spawn and go into wait for end wave state or maybe never wait ??? like vampire survivors
+                        SwitchState(SpawnerState.Idle); //then check if ended to spawn and go into wait for end wave state or maybe never wait ??? like vampire survivors
                         StartNewManche();
                         return;
                     }
 
                     GameObject alien = Instantiate(_waves[_waveIndex].SpawnManche[_mancheIndex].Aliens[_mancheInstanciateIndex], _aliensContainer);
+                    alien.name = "Alien" + _mancheInstanciateIndex.ToString();
                     alien.transform.SetPositionAndRotation(_whereToSpawnAliens.position,Quaternion.identity);
-                    alien.transform.LookAt(House.Instance.transform);
-                    _counter = _timeToSpawnOneEnemy;
+                    Vector3 lookAtVector = House.Instance.transform.position - alien.transform.position;
+                    lookAtVector.y = 0;
+                    alien.transform.rotation = Quaternion.LookRotation(lookAtVector);
+                    SwitchState(SpawnerState.SpawningAliens, _timeToSpawnOneEnemy);
                 }
                 break;
 
@@ -101,12 +122,11 @@ public class WaveSpawner : MonoBehaviour
                 float evaluatedIndex = _movingCurve.Evaluate(_counter);
                 print(evaluatedIndex);
                 transform.localPosition = Vector3.LerpUnclamped(_oldPosition,_nextPosition, evaluatedIndex);
-                _counter += Time.deltaTime;
+                _counter += Time.deltaTime * _lerpMultiplier;
                 float _timer = _movingCurve.keys[_movingCurve.keys.Length-1].time;
                 if (_counter > 1f)
                 {
-                    _counter = _timeToSpawnOneEnemy;
-                    _spawnState = SpawnerState.SpawningAliens;
+                    SwitchState(SpawnerState.SpawningAliens, _timeToSpawnOneEnemy);
                 }
                 break;
         }

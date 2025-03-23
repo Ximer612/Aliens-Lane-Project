@@ -30,5 +30,4 @@ public class AreaBullet : Bullet
         //Invoke(nameof(ResetBullet),3);
         //activate update since it's an area so maybe takes time damage
     }
-
 }
