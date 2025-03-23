@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1247962250431986218}
   - component: {fileID: 7860276624487635095}
   m_Layer: 11
-  m_Name: Walker
+  m_Name: WalkerArmor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7cf5eefd6c07ca94fae84aeb304e58c1, type: 2}
+  - {fileID: 2100000, guid: d6260759b91e4ef4994b9d885e110d26, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -103,8 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c252e08fee087847b12efc92a359cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 200
-  _hp: 100
+  MaxHP: 400
+  _hp: 200
   Alive: 1
   OnDie:
     m_PersistentCalls:
@@ -127,7 +127,7 @@ MonoBehaviour:
   OnRespawn:
     m_PersistentCalls:
       m_Calls: []
-  OnDieMoneyAmount: 0.5
+  OnDieMoneyAmount: 1
 --- !u!114 &3438652023658672148
 MonoBehaviour:
   m_ObjectHideFlags: 0

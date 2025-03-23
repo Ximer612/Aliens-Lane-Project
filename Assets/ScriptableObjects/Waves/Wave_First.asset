@@ -16,6 +16,8 @@ MonoBehaviour:
   - TimeFromLastManche: 60
     Aliens:
     - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
+    - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
+    - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
   - TimeFromLastManche: 5
     Aliens:
     - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
@@ -23,13 +25,14 @@ MonoBehaviour:
     - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
     - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
     - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
-    - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
-    - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
-    - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
-    - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
-    - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
   - TimeFromLastManche: 10
     Aliens:
+    - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
+    - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
+    - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
+    - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
+    - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
+    - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
     - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
     - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
     - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}

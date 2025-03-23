@@ -24,6 +24,8 @@ public class WaveSpawner : MonoBehaviour
     private List<Vector2> _possibilePositions;
     private Vector2 _selectedPosition = new Vector2(0,0);
 
+    [SerializeField] MoneyGivver _moneyGiver;
+
     private void Awake()
     {
         _possibilePositions = new List<Vector2>();
@@ -114,6 +116,14 @@ public class WaveSpawner : MonoBehaviour
                     Vector3 lookAtVector = House.Instance.transform.position - alien.transform.position;
                     lookAtVector.y = 0;
                     alien.transform.rotation = Quaternion.LookRotation(lookAtVector);
+
+                    //AlienBase alienActor = alien.GetComponent<AlienBase>();
+
+                    //if(alienActor)
+                    //{
+                    //    alienActor.OnDie.AddListener( () => { _moneyGiver.AddMoney(alienActor.Money); } );
+                    //}
+
                     SwitchState(SpawnerState.SpawningAliens, _timeToSpawnOneEnemy);
                 }
                 break;
