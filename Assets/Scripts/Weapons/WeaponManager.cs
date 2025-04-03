@@ -5,7 +5,9 @@ public class WeaponManager : MonoBehaviour
     public static LayerMask PlayerBulletsLayerMask, EnemyBulletsLayerMask;
 
     [SerializeField] PlayerWeapon _playerWeapon;
+    [SerializeField] MoneyGivver _moneyGivver;
     [SerializeField] GameObject _weaponMaster;
+    [SerializeField] Turret _turretTickets;
     [SerializeField] LayerMask _playerBulletsLayerMask, _enemyBulletsLayerMask;
 
     private void Awake()
@@ -14,12 +16,34 @@ public class WeaponManager : MonoBehaviour
         EnemyBulletsLayerMask = _enemyBulletsLayerMask;
     }
 
-    public void GiveWeaponToPlayer(WeaponScriptableObject InWeapon)
+    public void GivePlayerATurretTicket(Buyable InWeapon)
     {
+        //not enough money
+        if (!_moneyGivver.RemoveMoney(InWeapon.toBuyWeapon.ShopPrice))
+        {
+            NoMoney();
+            return;
+        }
+
+        InWeapon.OnBuy();
+        _turretTickets.AddTicket();
+    }
+
+    public void GiveWeaponToPlayer(Buyable InWeapon)
+    {
+        //not enough money
+        if (!_moneyGivver.RemoveMoney(InWeapon.toBuyWeapon.ShopPrice))
+        {
+            NoMoney();
+            return;
+        }
+
+        InWeapon.OnBuy();
+
         GameObject newWeapon = Instantiate(_weaponMaster, Vector3.one, Quaternion.identity);
-        newWeapon.name = InWeapon.Name;
+        newWeapon.name = InWeapon.toBuyWeapon.Name;
         Weapon weaponScript = newWeapon.GetComponent<Weapon>();
-        weaponScript.SetScriptableObject(InWeapon);
+        weaponScript.SetScriptableObject(InWeapon.toBuyWeapon);
         weaponScript.InstantiateBullets(_playerBulletsLayerMask);
 
         _playerWeapon.AddWeapon(newWeapon, newWeapon.GetComponent<Weapon>());
@@ -35,5 +59,10 @@ public class WeaponManager : MonoBehaviour
 
     //    _playerWeapon.AddWeapon(newWeapon, newWeapon.GetComponent<Weapon>());
     //}
+
+    void NoMoney()
+    {
+        print("not enough money!");
+    }
 
 }

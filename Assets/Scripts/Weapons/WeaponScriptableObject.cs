@@ -13,5 +13,6 @@ public class WeaponScriptableObject : ScriptableObject
     public float RandomSpreadFactor;
     public float ReloadTime;
     public float FireRate;
+    public float ShopPrice;
 
 }

@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 
@@ -19,8 +21,16 @@ public class MoneyGivver : MonoBehaviour
     public void AddMoney(float moneyAmount)
     {
         _currentMoney += moneyAmount;
-        _moneyText.text = string.Format("{0:#.00}€", _currentMoney);
+        _moneyText.text = _currentMoney.ToString("C", new CultureInfo("it-IT")); ;
     }
-    
+
+    public bool RemoveMoney(float moneyAmount)
+    {
+        if (_currentMoney < moneyAmount)
+           return false;
+
+        _currentMoney -= moneyAmount;
+        return true;
+    }
 
 }

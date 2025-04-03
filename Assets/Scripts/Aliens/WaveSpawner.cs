@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum SpawnerState { Idle, Moving, SpawningAliens, LAST };
+public enum SpawnerState { Idle, Moving, SpawningAliens, CanShop, LAST };
 
 public class WaveSpawner : MonoBehaviour
 {
+    static public Action<SpawnerState, int> OnChangeState;
 
     [SerializeField] Transform _aliensContainer, _whereToSpawnAliens;
     [SerializeField] WaveScriptableObject[] _waves;
@@ -40,6 +41,8 @@ public class WaveSpawner : MonoBehaviour
         enabled = false;
         StartNewWave();
     }
+
+
     private void StartNewWave()
     {
         _waveIndex++;
@@ -61,7 +64,7 @@ public class WaveSpawner : MonoBehaviour
 
         if(_mancheIndex >= _waves[_waveIndex].SpawnManche.Length)
         {
-            StartNewWave();
+            SwitchState(SpawnerState.CanShop,60f);
             return;
         }
 
@@ -73,6 +76,8 @@ public class WaveSpawner : MonoBehaviour
     {
         _spawnState = NewState;
         _counter = newCounter;
+
+        OnChangeState?.Invoke(NewState, _waveIndex);
     }
 
     private void Update()
@@ -105,14 +110,14 @@ public class WaveSpawner : MonoBehaviour
                     _mancheInstanciateIndex++;
                     if(_mancheInstanciateIndex >= _waves[_waveIndex].SpawnManche[_mancheIndex].Aliens.Length)
                     {
-                        SwitchState(SpawnerState.Idle); //then check if ended to spawn and go into wait for end wave state or maybe never wait ??? like vampire survivors
+                        //then check if ended to spawn and go into wait for end wave state or maybe never wait ??? like vampire survivors
                         StartNewManche();
                         return;
                     }
 
                     GameObject alien = Instantiate(_waves[_waveIndex].SpawnManche[_mancheIndex].Aliens[_mancheInstanciateIndex], _aliensContainer);
                     alien.name = "Alien" + _mancheInstanciateIndex.ToString();
-                    alien.transform.SetPositionAndRotation(_whereToSpawnAliens.position,Quaternion.identity);
+                    alien.transform.SetPositionAndRotation(_whereToSpawnAliens.position + new Vector3(UnityEngine.Random.Range(-0.5f,0.5f),0, UnityEngine.Random.Range(-0.5f, 0.5f)),Quaternion.identity);
                     Vector3 lookAtVector = House.Instance.transform.position - alien.transform.position;
                     lookAtVector.y = 0;
                     alien.transform.rotation = Quaternion.LookRotation(lookAtVector);
@@ -124,19 +129,26 @@ public class WaveSpawner : MonoBehaviour
                     //    alienActor.OnDie.AddListener( () => { _moneyGiver.AddMoney(alienActor.Money); } );
                     //}
 
-                    SwitchState(SpawnerState.SpawningAliens, _timeToSpawnOneEnemy);
+                    SwitchState(SpawnerState.Idle);
                 }
                 break;
 
             case SpawnerState.Moving:
                 float evaluatedIndex = _movingCurve.Evaluate(_counter);
-                print(evaluatedIndex);
                 transform.localPosition = Vector3.LerpUnclamped(_oldPosition,_nextPosition, evaluatedIndex);
                 _counter += Time.deltaTime * _lerpMultiplier;
                 float _timer = _movingCurve.keys[_movingCurve.keys.Length-1].time;
                 if (_counter > 1f)
                 {
                     SwitchState(SpawnerState.SpawningAliens, _timeToSpawnOneEnemy);
+                }
+                break;
+            case SpawnerState.CanShop:
+                _counter -= Time.deltaTime;
+
+                if (_counter < 0)
+                {
+                    StartNewWave();
                 }
                 break;
         }

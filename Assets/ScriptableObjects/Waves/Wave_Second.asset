@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wave_Second
   m_EditorClassIdentifier: 
   SpawnManche:
-  - TimeFromLastManche: 60
+  - TimeFromLastManche: 10
     Aliens:
     - {fileID: 5918082380811024741, guid: 1b195cd0c82e7fb4491c6a839d395c0c, type: 3}
     - {fileID: 5918082380811024741, guid: d50141087e0d2fd43a03ae55f03c87eb, type: 3}

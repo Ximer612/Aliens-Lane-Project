@@ -6,7 +6,12 @@ public class AlienBase : Actor
 
     protected override void Die()
     {
-        base.Die();
         MoneyGivver.Instance.AddMoney(OnDieMoneyAmount);
+        base.Die();
+    }
+
+    public void DeleteMe()
+    {
+        Destroy(gameObject);
     }
 }

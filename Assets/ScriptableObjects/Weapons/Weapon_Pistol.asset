@@ -23,3 +23,4 @@ MonoBehaviour:
   RandomSpreadFactor: 0
   ReloadTime: 2
   FireRate: 0.4
+  ShopPrice: 4.5
